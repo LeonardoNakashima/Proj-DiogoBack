@@ -9,7 +9,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/login")
-@CrossOrigin
+@CrossOrigin(origins = "*")
 public class LoginController {
 
     private final LoginService loginService;
