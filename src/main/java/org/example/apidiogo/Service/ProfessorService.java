@@ -1,11 +1,8 @@
 package org.example.apidiogo.Service;
 import jakarta.validation.Valid;
-import org.example.apidiogo.Dto.AlunoRequestDto;
-import org.example.apidiogo.Dto.AlunoResponseDto;
 import org.example.apidiogo.Dto.ProfessorRequestDto;
 import org.example.apidiogo.Dto.ProfessorResponseDto;
 import org.example.apidiogo.Exception.ProfessorNotFoundException;
-import org.example.apidiogo.Model.Aluno;
 import org.example.apidiogo.Model.Professor;
 import org.example.apidiogo.Repository.ProfessorRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
