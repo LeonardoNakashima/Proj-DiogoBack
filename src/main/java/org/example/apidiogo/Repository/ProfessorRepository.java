@@ -11,21 +11,8 @@ import java.util.Optional;
 
 public interface ProfessorRepository extends JpaRepository<Professor, Long> {
 
-    Optional<Professor> findByUsuario(String usuario);
+    Optional<Professor> findProfessorByUsuario(String usuario);
 
     Optional<Professor> findProfessorById(Long id);
-
-    @Modifying
-    @Transactional
-    @Query(
-            value = "CALL inserir_professor_com_disciplina(:nome, :usuario, :senha, :disciplina)",
-            nativeQuery = true
-    )
-    void inserirProfessorComDisciplina(
-            @Param("nome") String nome,
-            @Param("usuario") String usuario,
-            @Param("senha") String senha,
-            @Param("disciplina") String disciplina
-    );
 }
 

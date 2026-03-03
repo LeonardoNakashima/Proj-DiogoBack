@@ -1,7 +1,5 @@
 package org.example.apidiogo.Controller;
 import jakarta.validation.Valid;
-import org.example.apidiogo.Dto.AlunoRequestDto;
-import org.example.apidiogo.Dto.AlunoResponseDto;
 import org.example.apidiogo.Dto.BoletimRequestDto;
 import org.example.apidiogo.Dto.BoletimResponseDto;
 import org.example.apidiogo.Model.Boletim;

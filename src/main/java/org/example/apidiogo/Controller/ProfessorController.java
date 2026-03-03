@@ -1,10 +1,7 @@
 package org.example.apidiogo.Controller;
 
 import jakarta.validation.Valid;
-import org.example.apidiogo.Dto.DisciplinaRequestDto;
-import org.example.apidiogo.Dto.DisciplinaResponseDto;
-import org.example.apidiogo.Dto.ProfessorRequestDto;
-import org.example.apidiogo.Dto.ProfessorResponseDto;
+import org.example.apidiogo.Dto.*;
 import org.example.apidiogo.Exception.DisciplinaNotFoundException;
 import org.example.apidiogo.Exception.ProfessorNotFoundException;
 import org.example.apidiogo.Model.Disciplina;
@@ -56,5 +53,9 @@ public class ProfessorController implements ProfessorOpenApi {
         return ResponseEntity.noContent().build();
     }
 
-
+    @PutMapping("/update/{id}")
+    public ResponseEntity<ProfessorResponseDto> updateProfessor(@PathVariable Long id, @RequestBody @Valid ProfessorRequestDto dto) {
+        ProfessorResponseDto response = service.updateProfessor(dto, id);
+        return ResponseEntity.ok(response);
+    }
 }
