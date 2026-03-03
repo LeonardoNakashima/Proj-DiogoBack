@@ -47,9 +47,6 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
-                        .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
-                        .requestMatchers("/professor/**", "/disciplina/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_PROFESSOR")
-                        .requestMatchers("/aluno/**","/boletim/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_PROFESSOR","ROLE_ALUNO")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
