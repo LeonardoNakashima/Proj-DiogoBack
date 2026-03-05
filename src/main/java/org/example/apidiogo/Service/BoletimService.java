@@ -28,7 +28,6 @@ public class BoletimService {
     private Boletim fromRequestDTO(BoletimRequestDto dto) {
         Boletim boletim = new Boletim();
         boletim.setId_aluno(dto.getId_aluno());
-        boletim.setId_professor(dto.getId_professor());
         boletim.setN1(dto.getN1());
         boletim.setN2(dto.getN2());
         boletim.setId_disciplina(dto.getId_disciplina());
@@ -40,7 +39,6 @@ public class BoletimService {
         return new BoletimResponseDto(
                 boletim.getId(),
                 boletim.getId_disciplina(),
-                boletim.getId_professor(),
                 boletim.getId_aluno(),
                 boletim.getN1(),
                 boletim.getN2(),
@@ -82,7 +80,6 @@ public class BoletimService {
         existente.setMedia(boletimAtualizado.getMedia());
         existente.setN1(boletimAtualizado.getN1());
         existente.setN2(boletimAtualizado.getN2());
-        existente.setId_professor(boletimAtualizado.getId_professor());
         existente.setId_aluno(boletimAtualizado.getId_aluno());
 
         Boletim atualizado = boletimRepository.save(existente);
