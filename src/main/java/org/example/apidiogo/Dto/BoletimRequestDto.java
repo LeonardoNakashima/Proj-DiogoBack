@@ -8,9 +8,6 @@ public class BoletimRequestDto {
     private Long id_disciplina;
 
     @Valid
-    private Long id_professor;
-
-    @Valid
     private Long id_aluno;
 
     @Valid
@@ -28,14 +25,6 @@ public class BoletimRequestDto {
 
     public void setId_disciplina(@Valid Long id_disciplina) {
         this.id_disciplina = id_disciplina;
-    }
-
-    public @Valid Long getId_professor() {
-        return id_professor;
-    }
-
-    public void setId_professor(@Valid Long id_professor) {
-        this.id_professor = id_professor;
     }
 
     public @Valid Long getId_aluno() {

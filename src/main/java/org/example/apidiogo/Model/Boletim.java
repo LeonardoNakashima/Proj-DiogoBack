@@ -15,8 +15,6 @@ public class Boletim {
 
     private Long id_disciplina;
 
-    private Long id_professor;
-
     private Long id_aluno;
 
     private Double n1;
@@ -29,10 +27,9 @@ public class Boletim {
     public Boletim() {
     }
 
-    public Boletim(Long id, Long id_disciplina, Long id_professor, Long id_aluno, Double n1, Double n2, Double media) {
+    public Boletim(Long id, Long id_disciplina, Long id_aluno, Double n1, Double n2, Double media) {
         this.id = id;
         this.id_disciplina = id_disciplina;
-        this.id_professor = id_professor;
         this.id_aluno = id_aluno;
         this.n1 = n1;
         this.n2 = n2;
@@ -49,14 +46,6 @@ public class Boletim {
 
     public void setId_disciplina(Long id_disciplina) {
         this.id_disciplina = id_disciplina;
-    }
-
-    public Long getId_professor() {
-        return id_professor;
-    }
-
-    public void setId_professor(Long id_professor) {
-        this.id_professor = id_professor;
     }
 
     public Long getId_aluno() {
