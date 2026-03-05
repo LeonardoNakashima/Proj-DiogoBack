@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -56,6 +57,12 @@ public class ProfessorController implements ProfessorOpenApi {
     @PutMapping("/update/{id}")
     public ResponseEntity<ProfessorResponseDto> updateProfessor(@PathVariable Long id, @RequestBody @Valid ProfessorRequestDto dto) {
         ProfessorResponseDto response = service.updateProfessor(dto, id);
+        return ResponseEntity.ok(response);
+    }
+
+    @PatchMapping("/update/{id}")
+    public ResponseEntity<ProfessorResponseDto> patchProfessor(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
+        ProfessorResponseDto response = service.updatePatchProfessor(updates, id);
         return ResponseEntity.ok(response);
     }
 }

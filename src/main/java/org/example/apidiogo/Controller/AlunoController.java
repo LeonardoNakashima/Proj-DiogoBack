@@ -17,6 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/aluno")
@@ -59,5 +61,9 @@ public class AlunoController implements AlunoOpenApi {
         return ResponseEntity.ok(response);
     }
 
-
+    @PatchMapping("/update/{matricula}")
+    public ResponseEntity<AlunoResponseDto> patchAluno(@PathVariable Long matricula, @RequestBody Map<String, Object> updates) {
+        AlunoResponseDto response = service.updatePatchAluno(updates, matricula);
+        return ResponseEntity.ok(response);
+    }
 }

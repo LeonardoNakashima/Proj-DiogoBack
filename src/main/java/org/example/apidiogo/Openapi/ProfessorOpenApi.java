@@ -12,9 +12,11 @@ import org.example.apidiogo.Dto.*;
 import org.example.apidiogo.Model.Disciplina;
 import org.example.apidiogo.Model.Professor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
+import java.util.Map;
 
 @Tag(name = "Professor", description = "Endpoints para gerenciamento dos Professores")
 public interface ProfessorOpenApi {
@@ -57,5 +59,16 @@ public interface ProfessorOpenApi {
             @Parameter(description = "Id do Professor para ser atualizado", required = true, example = "123 ") Long id,
             @Parameter(description = "Novos dados do Professor") ProfessorRequestDto dto);
 
+
+    @Operation(summary = "Atualiza parcialmente um professor", description = "Atualiza um ou mais campos de um professor existente (Patch).")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Professor atualizado com sucesso",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProfessorResponseDto.class))),
+            @ApiResponse(responseCode = "404", description = "Professor não encontrado", content = @Content)
+    })
+    ResponseEntity<ProfessorResponseDto> patchProfessor(
+            @Parameter(description = "id do professor a ser atualizado", required = true, example = "1234")
+            @PathVariable Long id,
+            @RequestBody Map<String, Object> updates);
 
 }
