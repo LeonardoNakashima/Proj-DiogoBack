@@ -2,9 +2,12 @@ package org.example.apidiogo.Service;
 
 import ch.qos.logback.core.pattern.util.AlmostAsIsEscapeUtil;
 import jakarta.validation.Valid;
+import org.example.apidiogo.Dto.AdminResponseDto;
 import org.example.apidiogo.Dto.AlunoRequestDto;
 import org.example.apidiogo.Dto.AlunoResponseDto;
+import org.example.apidiogo.Exception.AdminNotFoundException;
 import org.example.apidiogo.Exception.AlunoNotFoundException;
+import org.example.apidiogo.Model.Admin;
 import org.example.apidiogo.Model.Aluno;
 import org.example.apidiogo.Repository.AlunoRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -85,6 +89,24 @@ public class AlunoService {
         Aluno atualizado = alunoRepository.save(existente);
         return toResponseDto(atualizado);
 
+    }
+
+    public AlunoResponseDto updatePatchAluno(Map<String, Object> updates, Long matricula) {
+        Aluno existente = alunoRepository.findAlunoByMatricula(matricula)
+                .orElseThrow(() -> new AlunoNotFoundException("Aluno com a matricula " + matricula+ " não foi encontrado"));
+
+        if(updates.containsKey("email")){
+            existente.setEmail(updates.get("email").toString());
+        }
+        if (updates.containsKey("nome")) {
+            existente.setNome(updates.get("nome").toString());
+        }
+        if (updates.containsKey("senha")) {
+            existente.setSenha(updates.get("senha").toString());
+        }
+
+        Aluno atualizado = alunoRepository.save(existente);
+        return toResponseDto(atualizado);
     }
 
 }

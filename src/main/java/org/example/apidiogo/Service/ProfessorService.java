@@ -1,14 +1,18 @@
 package org.example.apidiogo.Service;
 import jakarta.validation.Valid;
+import org.example.apidiogo.Dto.AlunoResponseDto;
 import org.example.apidiogo.Dto.ProfessorRequestDto;
 import org.example.apidiogo.Dto.ProfessorResponseDto;
+import org.example.apidiogo.Exception.AlunoNotFoundException;
 import org.example.apidiogo.Exception.ProfessorNotFoundException;
+import org.example.apidiogo.Model.Aluno;
 import org.example.apidiogo.Model.Professor;
 import org.example.apidiogo.Repository.ProfessorRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -75,6 +79,24 @@ public class ProfessorService {
         Professor existente = professorRepository.findProfessorById(id)
                 .orElseThrow(() -> new ProfessorNotFoundException("Professor com o id " + id + " não encontrado"));
         existente.setNome(professorAtualizado.getNome());
+        Professor atualizado = professorRepository.save(existente);
+        return toResponseDto(atualizado);
+    }
+
+    public ProfessorResponseDto updatePatchProfessor(Map<String, Object> updates, Long id) {
+        Professor existente = professorRepository.findProfessorById(id)
+                .orElseThrow(() -> new ProfessorNotFoundException("Professor com o id " + id+ " não foi encontrado"));
+
+        if(updates.containsKey("usuario")){
+            existente.setUsuario(updates.get("usuario").toString());
+        }
+        if (updates.containsKey("nome")) {
+            existente.setNome(updates.get("nome").toString());
+        }
+        if (updates.containsKey("senha")) {
+            existente.setSenha(updates.get("senha").toString());
+        }
+
         Professor atualizado = professorRepository.save(existente);
         return toResponseDto(atualizado);
     }

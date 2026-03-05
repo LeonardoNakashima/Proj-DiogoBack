@@ -14,9 +14,11 @@ import org.example.apidiogo.Dto.AlunoRequestDto;
 import org.example.apidiogo.Dto.AlunoResponseDto;
 import org.example.apidiogo.Model.Aluno;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
+import java.util.Map;
 
 @Tag(name = "Aluno", description = "Endpoints para gerenciamento de Alunos")
 public interface AlunoOpenApi {
@@ -57,4 +59,15 @@ public interface AlunoOpenApi {
             @Parameter(description = "Matricula do Aluno para ser atualizado", required = true, example = "123 ") Long matricula,
             @Parameter(description = "Novos dados do aluno") AlunoRequestDto dto);
 
+
+    @Operation(summary = "Atualiza parcialmente um Aluno", description = "Atualiza um ou mais campos de um Aluno existente (Patch).")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Aluno atualizado com sucesso",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = AlunoResponseDto.class))),
+            @ApiResponse(responseCode = "404", description = "Aluno não encontrado", content = @Content)
+    })
+    ResponseEntity<AlunoResponseDto> patchAluno(
+            @Parameter(description = "matricula do aluno a ser atualizado", required = true, example = "1234567")
+            @PathVariable Long id,
+            @RequestBody Map<String, Object> updates);
 }

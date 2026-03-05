@@ -38,4 +38,10 @@ public class GlobalManipulatorException {
                 .body("Boletim not found "+ex.getMessage());
     }
 
+    @ExceptionHandler(ObservacaoNotFoundException.class)
+    public ResponseEntity<String> handleObservacaoNotFoundException(ObservacaoNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("Observacao not found "+ex.getMessage());
+    }
+
 }

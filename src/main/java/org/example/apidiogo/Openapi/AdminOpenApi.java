@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
+import java.util.Map;
 
 @Tag(name = "Admin", description = "Endpoints para gerenciamento dos Admins")
 public interface AdminOpenApi {
@@ -56,5 +57,18 @@ public interface AdminOpenApi {
     ResponseEntity<AdminResponseDto> updateAdmin(
             @Parameter(description = "Id do administrador para ser atualizado", required = true, example = "123 ") Long id,
             @Parameter(description = "Novos dados da empresa") AdminRequestDto dto);
+
+
+    @Operation(summary = "Atualiza parcialmente um administrador", description = "Atualiza um ou mais campos de um administrador existente (Patch).")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Administrador atualizado com sucesso",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = AdminResponseDto.class))),
+            @ApiResponse(responseCode = "404", description = "Administrador não encontrado", content = @Content)
+    })
+    ResponseEntity<AdminResponseDto> patchAdmin(
+            @Parameter(description = "id do administrador a ser atualizado", required = true, example = "1234")
+            @PathVariable Long id,
+            @RequestBody Map<String, Object> updates);
+
 
 }

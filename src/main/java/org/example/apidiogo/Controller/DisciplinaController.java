@@ -18,11 +18,9 @@ import java.util.List;
 public class DisciplinaController implements DisciplinaOpenApi {
 
     private final DisciplinaService service;
-    private final DisciplinaService disciplinaService;
 
-    public DisciplinaController(DisciplinaService service, DisciplinaService disciplinaService) {
+    public DisciplinaController(DisciplinaService service) {
         this.service = service;
-        this.disciplinaService = disciplinaService;
     }
 
     @GetMapping("/list")
@@ -52,7 +50,7 @@ public class DisciplinaController implements DisciplinaOpenApi {
 
     @PutMapping("/update/{id}")
     public ResponseEntity<DisciplinaResponseDto> updateDisciplina(@PathVariable Long id, @RequestBody @Valid DisciplinaRequestDto dto) {
-        DisciplinaResponseDto response = disciplinaService.updateDisciplina(dto, id);
+        DisciplinaResponseDto response = service.updateDisciplina(dto, id);
         return ResponseEntity.ok(response);
     }
 }

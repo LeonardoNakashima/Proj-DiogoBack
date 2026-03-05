@@ -12,6 +12,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/Admin")
@@ -56,4 +58,12 @@ public class AdminController implements AdminOpenApi {
         AdminResponseDto response = service.updateAdmin(dto, id);
         return ResponseEntity.ok(response);
     }
+
+    @PatchMapping("/update/{id}")
+    public ResponseEntity<AdminResponseDto> patchAdmin(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
+        AdminResponseDto response = service.updatePatchAdmin(updates, id);
+        return ResponseEntity.ok(response);
+    }
+
+
 }

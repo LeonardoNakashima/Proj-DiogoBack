@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -77,6 +78,21 @@ public class AdminService {
         Admin atualizado = adminRepository.save(existente);
         return toResponseDto(atualizado);
 
+    }
+
+    public AdminResponseDto updatePatchAdmin(Map<String, Object> updates, Long id) {
+        Admin existente = adminRepository.findById(id)
+                .orElseThrow(() -> new AdminNotFoundException("Admin com o id " + id+ " não foi encontrado"));
+
+        if(updates.containsKey("usuario")){
+            existente.setUsuario(updates.get("usuario").toString());
+        }
+        if (updates.containsKey("senha")) {
+            existente.setSenha(updates.get("senha").toString());
+        }
+
+        Admin atualizado = adminRepository.save(existente);
+        return toResponseDto(atualizado);
     }
 
 
