@@ -1,6 +1,9 @@
 package org.example.apidiogo.Dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import org.example.apidiogo.Model.Disciplina;
+
+import java.util.List;
 
 @Schema(description = "Objeto de resposta que representa os dados de um professor")
 public class ProfessorResponseDto {
@@ -11,13 +14,15 @@ public class ProfessorResponseDto {
     private String nome;
     @Schema(description = "Usuario do Professor", example = "Carlos.Alberto")
     private String usuario;
+    private List<Disciplina> disciplina;
 
     public ProfessorResponseDto() {}
 
-    public ProfessorResponseDto(Long id, String nome, String usuario) {
+    public ProfessorResponseDto(Long id, String nome, String usuario, List<Disciplina> disciplina) {
         this.id = id;
         this.nome = nome;
         this.usuario = usuario;
+        this.disciplina = disciplina;
     }
 
     public Long getId() {
@@ -30,5 +35,9 @@ public class ProfessorResponseDto {
 
     public String getUsuario() {
         return usuario;
+    }
+
+    public List<Disciplina> getDisciplina() {
+        return disciplina;
     }
 }

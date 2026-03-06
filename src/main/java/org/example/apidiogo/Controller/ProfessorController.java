@@ -31,9 +31,10 @@ public class ProfessorController implements ProfessorOpenApi {
 
     @GetMapping("/list")
     public ResponseEntity<List<ProfessorResponseDto>> listProfessores() {
-        List<ProfessorResponseDto> professores = service.listAll();
+        List<ProfessorResponseDto> professores = service.listProfessorWithDisciplina();
         return ResponseEntity.ok(professores);
     }
+
 
 
     @GetMapping("/findProfessor/{id}")
