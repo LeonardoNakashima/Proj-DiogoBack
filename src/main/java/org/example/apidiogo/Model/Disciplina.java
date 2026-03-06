@@ -2,6 +2,8 @@ package org.example.apidiogo.Model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class Disciplina {
     @Id
@@ -9,6 +11,7 @@ public class Disciplina {
     private Long id;
 
     private String nome;
+
 
     public Disciplina() {}
 

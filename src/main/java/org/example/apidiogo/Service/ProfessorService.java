@@ -43,7 +43,8 @@ public class ProfessorService {
         return new ProfessorResponseDto(
                 professor.getId(),
                 professor.getNome(),
-                professor.getUsuario()
+                professor.getUsuario(),
+                professor.getDisciplinas()
         );
     }
 
@@ -57,6 +58,13 @@ public class ProfessorService {
     public List<ProfessorResponseDto> listById(Long id) {
         Optional<Professor> professor = professorRepository.findById(id);
         return professor.stream()
+                .map(this::toResponseDto)
+                .toList();
+    }
+
+    public List<ProfessorResponseDto> listProfessorWithDisciplina() {
+        return professorRepository.listProfessorWithDisciplina()
+                .stream()
                 .map(this::toResponseDto)
                 .toList();
     }

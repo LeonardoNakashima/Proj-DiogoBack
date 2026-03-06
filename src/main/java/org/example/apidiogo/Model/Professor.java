@@ -1,9 +1,6 @@
 package org.example.apidiogo.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,6 +20,15 @@ public class Professor implements UserDetails {
 
     private String senha;
 
+    @ManyToMany
+    @JoinTable(
+            name = "professor_disciplina",
+            joinColumns = @JoinColumn(name = "id_professor"),
+            inverseJoinColumns = @JoinColumn(name = "id_disciplina")
+    )
+    private List<Disciplina> disciplina;
+
+
     public Professor() {}
 
     public Professor(Long id, String nome, String usuario, String senha) {
@@ -35,7 +41,13 @@ public class Professor implements UserDetails {
     public Long getId() {
         return id;
     }
+    public List<Disciplina> getDisciplinas() {
+        return disciplina;
+    }
 
+    public void setDisciplinas(List<Disciplina> disciplina) {
+        this.disciplina = disciplina;
+    }
     public String getNome() {
         return nome;
     }
