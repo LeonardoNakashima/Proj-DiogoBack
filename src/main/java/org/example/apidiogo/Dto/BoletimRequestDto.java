@@ -56,6 +56,6 @@ public class BoletimRequestDto {
     }
 
     public void setMedia(@Valid Double media) {
-        this.media = media;
+        this.media = n2 + n1 / 2;
     }
 }
