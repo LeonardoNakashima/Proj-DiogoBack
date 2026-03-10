@@ -5,14 +5,13 @@ import org.example.apidiogo.Dto.*;
 import org.example.apidiogo.Exception.AdminNotFoundException;
 import org.example.apidiogo.Exception.AlunoNotFoundException;
 import org.example.apidiogo.Exception.BoletimNotFoundException;
-import org.example.apidiogo.Model.Admin;
-import org.example.apidiogo.Model.Aluno;
-import org.example.apidiogo.Model.Boletim;
-import org.example.apidiogo.Model.Disciplina;
+import org.example.apidiogo.Exception.ProfessorNotFoundException;
+import org.example.apidiogo.Model.*;
 import org.example.apidiogo.Repository.BoletimRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -86,4 +85,23 @@ public class BoletimService {
         return toResponseDto(atualizado);
     }
 
+    public BoletimResponseDto updatePatchBoletim(Map<String, Object> updates, Long id) {
+        Boletim existente = boletimRepository.findById(id)
+                .orElseThrow(() -> new BoletimNotFoundException("Boletim com o id " + id+ " não foi encontrado"));
+
+        if(updates.containsKey("id_aluno")){
+            existente.setId_aluno(Long.valueOf(updates.get("id_aluno").toString()));
+        }
+        if (updates.containsKey("n2")) {
+            existente.setN2(Double.valueOf(updates.get("n2").toString()));
+        }
+        if (updates.containsKey("n1")) {
+            existente.setN1(Double.valueOf(updates.get("n1").toString()));
+        }
+        if (updates.containsKey("media")) {
+            existente.setMedia(Double.valueOf(updates.get("media").toString()));
+        }
+        Boletim atualizado = boletimRepository.save(existente);
+        return toResponseDto(atualizado);
+    }
 }

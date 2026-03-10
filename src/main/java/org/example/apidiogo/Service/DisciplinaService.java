@@ -13,6 +13,7 @@ import org.example.apidiogo.Repository.DisciplinaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -74,4 +75,13 @@ public class DisciplinaService {
     }
 
 
+    public DisciplinaResponseDto updatePatchDisciplina(Map<String, Object> updates, Long id) {
+        Disciplina existente = disciplinaRepository.findById(id)
+                .orElseThrow(() -> new DisciplinaNotFoundException("Disciplina com o id " + id+ " não foi encontrado"));
+        if(updates.containsKey("nome")){
+            existente.setNome(String.valueOf(Long.valueOf(updates.get("nome").toString())));
+        }
+        Disciplina atualizado = disciplinaRepository.save(existente);
+        return toResponseDto(atualizado);
+    }
 }

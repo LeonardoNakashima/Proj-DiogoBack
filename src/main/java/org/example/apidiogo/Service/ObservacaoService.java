@@ -1,17 +1,17 @@
 package org.example.apidiogo.Service;
 import jakarta.validation.Valid;
-import org.example.apidiogo.Dto.DisciplinaRequestDto;
-import org.example.apidiogo.Dto.DisciplinaResponseDto;
-import org.example.apidiogo.Dto.ObservacaoRequestDto;
-import org.example.apidiogo.Dto.ObservacaoResponseDto;
+import org.example.apidiogo.Dto.*;
+import org.example.apidiogo.Exception.BoletimNotFoundException;
 import org.example.apidiogo.Exception.DisciplinaNotFoundException;
 import org.example.apidiogo.Exception.ObservacaoNotFoundException;
+import org.example.apidiogo.Model.Boletim;
 import org.example.apidiogo.Model.Disciplina;
 import org.example.apidiogo.Model.Observacao;
 import org.example.apidiogo.Repository.ObservacaoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -72,6 +72,23 @@ public class ObservacaoService {
         existente.setDescricao(observacaoAtualizado.getDescricao());
         existente.setId_professor(observacaoAtualizado.getId_professor());
         existente.setId_aluno(observacaoAtualizado.getId_aluno());
+        Observacao atualizado = observacaoRepository.save(existente);
+        return toResponseDto(atualizado);
+    }
+
+    public ObservacaoResponseDto updatePatchObservacao(Map<String, Object> updates, Long id) {
+        Observacao existente = observacaoRepository.findById(id)
+                .orElseThrow(() -> new ObservacaoNotFoundException("observação com o id " + id+ " não foi encontrado"));
+
+        if(updates.containsKey("id_aluno")){
+            existente.setId_aluno(Long.valueOf(updates.get("id_aluno").toString()));
+        }
+        if (updates.containsKey("id_professor")) {
+            existente.setId_professor(Long.valueOf(updates.get("id_professor").toString()));
+        }
+        if (updates.containsKey("descricao")) {
+            existente.setDescricao(updates.get("descricao").toString());
+        }
         Observacao atualizado = observacaoRepository.save(existente);
         return toResponseDto(atualizado);
     }
