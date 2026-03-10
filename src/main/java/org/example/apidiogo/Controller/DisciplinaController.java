@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/disciplina")
@@ -51,6 +53,12 @@ public class DisciplinaController implements DisciplinaOpenApi {
     @PutMapping("/update/{id}")
     public ResponseEntity<DisciplinaResponseDto> updateDisciplina(@PathVariable Long id, @RequestBody @Valid DisciplinaRequestDto dto) {
         DisciplinaResponseDto response = service.updateDisciplina(dto, id);
+        return ResponseEntity.ok(response);
+    }
+
+    @PatchMapping("/update/{id}")
+    public ResponseEntity<DisciplinaResponseDto> patchDisciplina(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
+        DisciplinaResponseDto response = service.updatePatchDisciplina(updates, id);
         return ResponseEntity.ok(response);
     }
 }

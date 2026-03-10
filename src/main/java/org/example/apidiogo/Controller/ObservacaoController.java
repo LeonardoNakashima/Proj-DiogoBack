@@ -1,10 +1,7 @@
 package org.example.apidiogo.Controller;
 
 import jakarta.validation.Valid;
-import org.example.apidiogo.Dto.DisciplinaRequestDto;
-import org.example.apidiogo.Dto.DisciplinaResponseDto;
-import org.example.apidiogo.Dto.ObservacaoRequestDto;
-import org.example.apidiogo.Dto.ObservacaoResponseDto;
+import org.example.apidiogo.Dto.*;
 import org.example.apidiogo.Model.Disciplina;
 import org.example.apidiogo.Model.Observacao;
 import org.example.apidiogo.Openapi.ObservacaoOpenApi;
@@ -14,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/observacao")
@@ -52,6 +50,10 @@ public class ObservacaoController implements ObservacaoOpenApi {
         return ResponseEntity.ok(response);
     }
 
-
+    @PatchMapping("/update/{id}")
+    public ResponseEntity<ObservacaoResponseDto> patchObservacao(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
+        ObservacaoResponseDto response = service.updatePatchObservacao(updates, id);
+        return ResponseEntity.ok(response);
+    }
 
 }
