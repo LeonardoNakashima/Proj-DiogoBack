@@ -42,6 +42,10 @@ public class AlunoController implements AlunoOpenApi {
         return ResponseEntity.ok(service.listByMatricula(matricula));
     }
 
+    @GetMapping("/findAlunoEmail/{email}")
+    public ResponseEntity<List<AlunoResponseDto>> findAlunoEmail(@PathVariable String email) {
+        return ResponseEntity.ok(service.listByEmail(email));
+    }
 
     @PostMapping("/create")
     public ResponseEntity<AlunoResponseDto> createAluno(@RequestBody @Valid AlunoRequestDto dto) {

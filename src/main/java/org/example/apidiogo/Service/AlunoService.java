@@ -64,6 +64,13 @@ public class AlunoService {
                 .map(this::toResponseDto)
                 .collect(Collectors.toList());    }
 
+    public List<AlunoResponseDto> listByEmail(String email) {
+        Optional<Aluno> aluno = alunoRepository.findAlunoByEmail(email);
+        return aluno.stream()
+                .map(this::toResponseDto)
+                .collect(Collectors.toList());    }
+
+
 
 
     public AlunoResponseDto createAluno(AlunoRequestDto dto) {
