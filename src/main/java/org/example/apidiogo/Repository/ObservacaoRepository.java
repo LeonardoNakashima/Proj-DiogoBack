@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface ObservacaoRepository extends JpaRepository<Observacao, Long> {
 
     Optional<Observacao>findObservacaoById(Long id);
+
+    Optional<Observacao>findObservacaoByIdAluno(Long idAluno);
 }

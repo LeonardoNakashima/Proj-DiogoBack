@@ -26,8 +26,8 @@ public class ObservacaoService {
     private Observacao fromRequestDTO(ObservacaoRequestDto dto) {
         Observacao observacao = new Observacao();
         observacao.setDescricao(dto.getDescricao());
-        observacao.setId_professor(dto.getId_professor());
-        observacao.setId_aluno(dto.getId_aluno());
+        observacao.setIdProfessor(dto.getId_professor());
+        observacao.setIdAluno(dto.getId_aluno());
         return observacao;
     }
 
@@ -35,8 +35,8 @@ public class ObservacaoService {
         return new ObservacaoResponseDto(
                 observacao.getId(),
                 observacao.getDescricao(),
-                observacao.getId_professor(),
-                observacao.getId_aluno()
+                observacao.getIdProfessor(),
+                observacao.getIdAluno()
         );
     }
 
@@ -49,6 +49,13 @@ public class ObservacaoService {
 
     public List<ObservacaoResponseDto> listById(Long id) {
         Optional<Observacao> observacao = observacaoRepository.findById(id);
+        return observacao.stream()
+                .map(this::toResponseDto)
+                .collect(Collectors.toList());
+    }
+
+    public List<ObservacaoResponseDto> listByIdAluno(Long idAluno) {
+        Optional<Observacao> observacao = observacaoRepository.findObservacaoByIdAluno(idAluno);
         return observacao.stream()
                 .map(this::toResponseDto)
                 .collect(Collectors.toList());
@@ -70,8 +77,8 @@ public class ObservacaoService {
         Observacao existente = observacaoRepository.findObservacaoById(id)
                 .orElseThrow(() -> new ObservacaoNotFoundException("Observacao com o id " + id + " não encontrado"));
         existente.setDescricao(observacaoAtualizado.getDescricao());
-        existente.setId_professor(observacaoAtualizado.getId_professor());
-        existente.setId_aluno(observacaoAtualizado.getId_aluno());
+        existente.setIdProfessor(observacaoAtualizado.getId_professor());
+        existente.setIdAluno(observacaoAtualizado.getId_aluno());
         Observacao atualizado = observacaoRepository.save(existente);
         return toResponseDto(atualizado);
     }
@@ -81,10 +88,10 @@ public class ObservacaoService {
                 .orElseThrow(() -> new ObservacaoNotFoundException("observação com o id " + id+ " não foi encontrado"));
 
         if(updates.containsKey("id_aluno")){
-            existente.setId_aluno(Long.valueOf(updates.get("id_aluno").toString()));
+            existente.setIdAluno(Long.valueOf(updates.get("idAluno").toString()));
         }
         if (updates.containsKey("id_professor")) {
-            existente.setId_professor(Long.valueOf(updates.get("id_professor").toString()));
+            existente.setIdProfessor(Long.valueOf(updates.get("idProfessor").toString()));
         }
         if (updates.containsKey("descricao")) {
             existente.setDescricao(updates.get("descricao").toString());

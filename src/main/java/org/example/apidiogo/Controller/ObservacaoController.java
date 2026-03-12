@@ -32,6 +32,11 @@ public class ObservacaoController implements ObservacaoOpenApi {
         return ResponseEntity.ok(service.listById(id));
     }
 
+    @GetMapping("/findObservacaoAluno/{idAluno}")
+    public ResponseEntity<List<ObservacaoResponseDto>> findObservacaoAluno(@PathVariable Long idAluno) {
+        return ResponseEntity.ok(service.listByIdAluno(idAluno));
+    }
+
     @PostMapping("/create")
     public ResponseEntity<ObservacaoResponseDto> createObservacao(@RequestBody @Valid ObservacaoRequestDto dto) {
         ObservacaoResponseDto response = service.createObservacao(dto);
