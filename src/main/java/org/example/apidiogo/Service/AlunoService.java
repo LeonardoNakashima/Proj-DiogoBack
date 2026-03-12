@@ -3,6 +3,7 @@ package org.example.apidiogo.Service;
 import ch.qos.logback.core.pattern.util.AlmostAsIsEscapeUtil;
 import jakarta.validation.Valid;
 import org.example.apidiogo.Dto.AdminResponseDto;
+import org.example.apidiogo.Dto.AlunoNotaDto;
 import org.example.apidiogo.Dto.AlunoRequestDto;
 import org.example.apidiogo.Dto.AlunoResponseDto;
 import org.example.apidiogo.Exception.AdminNotFoundException;
@@ -10,6 +11,7 @@ import org.example.apidiogo.Exception.AlunoNotFoundException;
 import org.example.apidiogo.Model.Admin;
 import org.example.apidiogo.Model.Aluno;
 import org.example.apidiogo.Repository.AlunoRepository;
+import org.example.apidiogo.Repository.BoletimRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -23,11 +25,13 @@ import java.util.stream.Collectors;
 public class AlunoService {
 
     private final AlunoRepository alunoRepository;
+    private final BoletimRepository boletimRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public AlunoService(AlunoRepository alunoRepository, PasswordEncoder passwordEncoder) {
+    public AlunoService(AlunoRepository alunoRepository, PasswordEncoder passwordEncoder, BoletimRepository boletimRepository) {
         this.alunoRepository = alunoRepository;
         this.passwordEncoder = passwordEncoder;
+        this.boletimRepository = boletimRepository;
     }
 
 
@@ -70,7 +74,20 @@ public class AlunoService {
                 .map(this::toResponseDto)
                 .collect(Collectors.toList());    }
 
+    public List<AlunoNotaDto> listarAlunosComNotas(){
 
+        List<Object[]> resultado = boletimRepository.listarAlunosComNotas();
+
+        return resultado.stream()
+                .map(r -> new AlunoNotaDto(
+                        ((Number) r[0]).longValue(),
+                        (String) r[1],
+                        ((Number) r[2]).doubleValue(),
+                        ((Number) r[3]).doubleValue(),
+                        ((Number) r[4]).doubleValue()
+                ))
+                .toList();
+    }
 
 
     public AlunoResponseDto createAluno(AlunoRequestDto dto) {

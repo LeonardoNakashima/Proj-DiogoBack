@@ -1,26 +1,26 @@
 package org.example.apidiogo.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name = "Observacoes")
 public class Observacao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String descricao;
-    private Long id_professor;
-    private Long id_aluno;
+    @Column(name = "id_professor")
+    private Long idProfessor;
+    @Column(name = "id_aluno")
+    private Long idAluno;
 
     public Observacao() {}
 
-    public Observacao(Long id,String descricao, Long id_professor, Long id_aluno) {
+    public Observacao(Long id,String descricao, Long idProfessor, Long idAluno) {
         this.id = id;
         this.descricao = descricao;
-        this.id_professor = id_professor;
-        this.id_aluno = id_aluno;
+        this.idProfessor = idProfessor;
+        this.idAluno = idAluno;
     }
 
     public Long getId() {
@@ -35,19 +35,19 @@ public class Observacao {
         this.descricao = descricao;
     }
 
-    public Long getId_professor() {
-        return id_professor;
+    public Long getIdProfessor() {
+        return idProfessor;
     }
 
-    public void setId_professor(Long id_professor) {
-        this.id_professor = id_professor;
+    public void setIdProfessor(Long idProfessor) {
+        this.idProfessor = idProfessor;
     }
 
-    public Long getId_aluno() {
-        return id_aluno;
+    public Long getIdAluno() {
+        return idAluno;
     }
 
-    public void setId_aluno(Long id_aluno) {
-        this.id_aluno = id_aluno;
+    public void setIdAluno(Long idAluno) {
+        this.idAluno = idAluno;
     }
 }

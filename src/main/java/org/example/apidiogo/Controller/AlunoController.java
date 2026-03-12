@@ -1,10 +1,7 @@
 package org.example.apidiogo.Controller;
 
 import jakarta.validation.Valid;
-import org.example.apidiogo.Dto.AdminRequestDto;
-import org.example.apidiogo.Dto.AdminResponseDto;
-import org.example.apidiogo.Dto.AlunoRequestDto;
-import org.example.apidiogo.Dto.AlunoResponseDto;
+import org.example.apidiogo.Dto.*;
 import org.example.apidiogo.Exception.AdminNotFoundException;
 import org.example.apidiogo.Exception.AlunoNotFoundException;
 import org.example.apidiogo.Model.Admin;
@@ -34,6 +31,10 @@ public class AlunoController implements AlunoOpenApi {
     public ResponseEntity<List<AlunoResponseDto>> listAlunos() {
         List<AlunoResponseDto> alunos = service.listAll();
         return ResponseEntity.ok(alunos);
+    }
+    @GetMapping("/notas")
+    public ResponseEntity<List<AlunoNotaDto>> listarAlunosComNotas(){
+        return ResponseEntity.ok(service.listarAlunosComNotas());
     }
 
 
