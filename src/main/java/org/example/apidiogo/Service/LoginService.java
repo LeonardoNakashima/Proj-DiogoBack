@@ -7,6 +7,7 @@ import org.example.apidiogo.Repository.AdminRepository;
 import org.example.apidiogo.Repository.AlunoRepository;
 import org.example.apidiogo.Repository.ProfessorRepository;
 import org.example.apidiogo.Security.JwtUtil;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -62,5 +63,14 @@ public class LoginService {
         return new LoginProfessorResponse(token, professor.getNome());
     }
 
+    public String forgotPassword(String email) {
+
+        var aluno = alunoRepository.findAlunoByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("Aluno não encontrado"));
+
+        String token = jwtUtil.generateResetToken(email);
+
+        return "http://localhost:4200/reset-password?token=" + token;
+    }
 
 }
