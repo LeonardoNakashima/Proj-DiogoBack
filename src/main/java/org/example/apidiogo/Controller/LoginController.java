@@ -33,4 +33,12 @@ public class LoginController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/forgot-password")
+    public ResponseEntity<?> forgotPassword(@RequestParam String email) {
+
+        String link = loginService.forgotPassword(email);
+
+        return ResponseEntity.ok(link);
+    }
+
 }

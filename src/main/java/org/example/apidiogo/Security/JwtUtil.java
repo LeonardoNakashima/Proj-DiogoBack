@@ -6,6 +6,9 @@ import org.example.apidiogo.Model.Admin;
 import org.example.apidiogo.Model.Aluno;
 import org.example.apidiogo.Model.Professor;
 import org.springframework.stereotype.Component;
+import io.jsonwebtoken.security.Keys;
+import java.security.Key;
+import java.nio.charset.StandardCharsets;
 
 import java.util.Date;
 import java.util.function.Function;
@@ -14,6 +17,12 @@ import java.util.function.Function;
 public class JwtUtil {
     private final String SECRET_KEY = "as8d7a9s8d7as9d8a7s9d8a7sd98a7sd98as7d9as8d7a9s8d7as98d7a9s8d7a";
     private final long EXPIRATION_TIME = 1000 * 60 * 60 * 5;
+
+
+
+    private Key getSigningKey() {
+        return Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
+    }
 
     public String generateToken(Admin admin) {
         return Jwts.builder()
@@ -66,5 +75,15 @@ public class JwtUtil {
                 .setSigningKey(SECRET_KEY)
                 .parseClaimsJws(token)
                 .getBody();
+    }
+
+    public String generateResetToken(String email) {
+        return Jwts.builder()
+                .setSubject(email)
+                .claim("type", "reset")
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 15)) // 15 min
+                .signWith(getSigningKey())
+                .compact();
     }
 }
