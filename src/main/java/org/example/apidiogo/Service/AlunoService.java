@@ -2,10 +2,7 @@ package org.example.apidiogo.Service;
 
 import ch.qos.logback.core.pattern.util.AlmostAsIsEscapeUtil;
 import jakarta.validation.Valid;
-import org.example.apidiogo.Dto.AdminResponseDto;
-import org.example.apidiogo.Dto.AlunoNotaDto;
-import org.example.apidiogo.Dto.AlunoRequestDto;
-import org.example.apidiogo.Dto.AlunoResponseDto;
+import org.example.apidiogo.Dto.*;
 import org.example.apidiogo.Exception.AdminNotFoundException;
 import org.example.apidiogo.Exception.AlunoNotFoundException;
 import org.example.apidiogo.Model.Admin;
@@ -74,21 +71,24 @@ public class AlunoService {
                 .map(this::toResponseDto)
                 .collect(Collectors.toList());    }
 
-    public List<AlunoNotaDto> listarAlunosComNotas(){
-
-        List<Object[]> resultado = boletimRepository.listarAlunosComNotas();
-
-        return resultado.stream()
-                .map(r -> new AlunoNotaDto(
-                        ((Number) r[0]).longValue(),
-                        (String) r[1],
-                        ((Number) r[2]).doubleValue(),
+    public BoletimAlunoDto listarBoletimAluno(Long matricula) {
+        List<Object[]> resultado = boletimRepository.listarAlunosComNotas(matricula);
+        if (resultado.isEmpty()) {
+            throw new AlunoNotFoundException(
+                    "Nenhuma nota encontrada para o aluno de matrícula " + matricula
+            );
+        }
+        String nomeAluno = (String) resultado.get(0)[1];
+        List<DisciplinaNotaDto> disciplinas = resultado.stream()
+                .map(r -> new DisciplinaNotaDto(
+                        (String) r[2],
                         ((Number) r[3]).doubleValue(),
-                        ((Number) r[4]).doubleValue()
+                        ((Number) r[4]).doubleValue(),
+                        ((Number) r[5]).doubleValue()
                 ))
                 .toList();
+        return new BoletimAlunoDto(matricula, nomeAluno, disciplinas);
     }
-
 
     public AlunoResponseDto createAluno(AlunoRequestDto dto) {
         Aluno aluno = fromRequestDTO(dto);
