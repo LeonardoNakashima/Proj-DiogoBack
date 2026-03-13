@@ -32,9 +32,9 @@ public class AlunoController implements AlunoOpenApi {
         List<AlunoResponseDto> alunos = service.listAll();
         return ResponseEntity.ok(alunos);
     }
-    @GetMapping("/notas")
-    public ResponseEntity<List<AlunoNotaDto>> listarAlunosComNotas(){
-        return ResponseEntity.ok(service.listarAlunosComNotas());
+    @GetMapping("/notas/{matricula}")
+    public ResponseEntity<BoletimAlunoDto> boletimAluno(@PathVariable Long matricula){
+        return ResponseEntity.ok(service.listarBoletimAluno(matricula));
     }
 
 
